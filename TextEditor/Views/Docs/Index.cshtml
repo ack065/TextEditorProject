@@ -1,0 +1,88 @@
+﻿@model IEnumerable<TextEditor.Models.Doc>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 style="padding-left:20px">Index:</h1>
+<div class="d-flex justify-content-center align-items-center" style="width:150px; height:200px; background-color: ghostwhite ; font-size:100px ; border:groove">
+    <a style="text-decoration:none; color:black; padding-bottom:30px" asp-action="Create">+</a>
+</div>
+<br />
+<button class="btn btn-warning" style="display:flex; float:left; margin-right:15px; margin-top:5px" id="swapButton" onclick="toggleLayout()">≣</button>
+<h2>Your Content:</h2>
+
+<hr />
+<br/>
+<div id="layoutTable" style="display:block">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Content)
+                </th>
+                @*<th >
+                @Html.DisplayNameFor(model => model.User)
+                </th>*@
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    @*<td>
+                @Html.DisplayFor(modelItem => item.User.Id)
+                </td>*@
+                    <td>
+                        <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        </table>
+</div>
+
+<div id="layoutGrid" style="display:none">
+    <div class="row" style="text-align:center;">
+            @foreach (var item in Model)
+            {
+                <div class="col-2 m-3">
+                    <a>@Html.DisplayFor(modelItem => item.Title)</a>
+                    <div class="d-flex justify-content-center align-items-center" style="width:150px; height:200px; background-color:blanchedalmond ; font-size:50px ; border:groove">
+                        <a style="text-decoration:none; color:beige; padding-bottom:1px" asp-action="Edit" asp-route-id="@item.Id">📜</a>
+                    </div>
+                </div>
+
+            }
+    </div>
+</div>
+    <script>
+        function toggleLayout() {
+            var layoutTable = document.getElementById("layoutTable");
+            var layoutGrid = document.getElementById("layoutGrid");
+
+            if (layoutTable.style.display === "none") {
+                layoutTable.style.display = "block";
+                layoutGrid.style.display = "none";
+            }
+            else {
+                layoutTable.style.display = "none";
+                layoutGrid.style.display = "block";
+            }
+        }
+    </script>
+
+
+
